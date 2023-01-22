@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +27,11 @@ Route::middleware([
     })->name('dashboard');
 });
 Route::group(['middleware' => 'auth'], function () {
+    // Data Kategori
     Route::get('category/data', [CategoryController::class, 'data'])->name('category.data');
     Route::resource('category', CategoryController::class);
+
+    // Data Product
+    Route::get('product/data', [ProductController::class, 'data'])->name('product.data');
+    Route::resource('product', ProductController::class);
 });

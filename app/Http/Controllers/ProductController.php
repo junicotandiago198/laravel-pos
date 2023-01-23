@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -140,5 +141,21 @@ class ProductController extends Controller
         }
 
         return response(null, 204);
+    }
+    
+    public function cetakBarcode(Request $request)
+    {
+        $dataproduk = array();
+        foreach ($request->id_produk as $id) {
+            $produk = Product::find($id);
+            $dataproduk[] = $produk;
+        }
+
+        // nomor bantuan untuk pengecekaan table row pada view
+        $no = 1;
+
+        $pdf = PDF::loadView('product.barcode', compact('dataproduk', 'no'));
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('product.pdf');
     }
 }

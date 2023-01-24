@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\MemberController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,4 +37,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('product/delete-selected', [ProductController::class, 'deleteSelected'])->name('product.delete_selected');
     Route::post('product/cetak-barcode', [ProductController::class, 'cetakBarcode'])->name('product.cetak_barcode');
     Route::resource('product', ProductController::class);
+
+    // Data Member
+    Route::get('member/data', [MemberController::class, 'data'])->name('member.data');
+    Route::resource('member', MemberController::class);
+
 });

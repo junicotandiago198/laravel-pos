@@ -73,7 +73,7 @@
             @foreach ($datamember as $key => $data)
                 <tr>
                     @foreach ($data as $item)
-                        <td class="text-center" width="50%">
+                        <td class="text-center">
                             <div class="box">
                                 <img src="{{ asset('img/member.png') }}" alt="card" width="100%">
                                 <div class="logo">
@@ -87,6 +87,10 @@
                                 </div> 
                             </div>
                         </td>
+
+                        @if (count($datamember) == 1)
+                            <td class="text-center" style="width: 100%;"></td>
+                        @endif
                     @endforeach
                 </tr>
             @endforeach

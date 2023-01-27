@@ -16,7 +16,7 @@
             <div class="box-header with-border">
                 <div class="btn-group">
                     <button onclick="addForm('{{ route('product.store') }}')" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah</button>
-                    <button onclick="deleteSelected('{{ route('product.delete_selected') }}')" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i> Hapus</button>
+                    <button onclick="deleteSelected('{{ route('product.delete_selected') }}')" class="btn btn-dangerbtn-xs btn-flat"><i class="fa fa-trash"></i> Hapus</button>
                     <button onclick="cetakBarcode('{{ route('product.cetak_barcode') }}')" class="btn btn-info btn-xs btn-flat"><i class="fa fa-barcode"></i> Cetak Barcode</button>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                     @csrf
                     <table class="table table-striped bordered">
                         <thead>
-                            <th>
+                            <th width="5%">
                                 <input type="checkbox" name="select_all" id="select_all">
                             </th>
                             <th width="5%">No</th>
@@ -56,6 +56,7 @@
     $(function () {
         table = $('.table').DataTable({
             processing: true,
+            serverSide: true,
             autoWidth: false,
             ajax: {
                 url: '{{ route('product.data') }}',

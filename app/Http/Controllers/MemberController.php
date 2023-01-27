@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
@@ -24,6 +25,11 @@ class MemberController extends Controller
         return datatables()
             ->of($member)
             ->addIndexColumn()
+            ->addColumn('select_all', function($member) {
+                return '
+                    <input type="checkbox" name="id_member[]" value="'. $member->id_member .'">
+                ';
+            })
             ->addColumn('kode_member', function($member) {
                 return '<span class="label label-success">'. $member->kode_member .'</span>';
             })
@@ -35,7 +41,7 @@ class MemberController extends Controller
                 </div>
                 ';
             })
-            ->rawColumns(['aksi', 'kode_member'])
+            ->rawColumns(['aksi', 'kode_member', 'select_all'])
             ->make(true);
     }
 
@@ -120,5 +126,22 @@ class MemberController extends Controller
         $member->delete();
 
         return response(null, 204);
+    }
+
+    public function cetakMember(Request $request)
+    {
+        $datamember = collect(array());
+        foreach ($request->id_member as $id) {
+            $member = Member::find($id);
+            $datamember[] = $member;
+        }
+
+        $datamember = $datamember->chunk(2);
+
+        // nomor bantuan untuk pengecekaan table row pada view
+        $no = 1;
+        $pdf = PDF::loadView('member.cetak', compact('datamember', 'no'));
+        $pdf->setPaper(array(0, 0, 566.93, 850.39), 'potrait');
+        return $pdf->stream('member.pdf');
     }
 }

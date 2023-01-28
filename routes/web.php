@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ExpenditureController;
 use App\Http\Controllers\SupplierController;
 
 /*
@@ -48,4 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('supplier/data', [SupplierController::class, 'data'])->name('supplier.data');
     Route::resource('supplier', SupplierController::class);
 
+    // Data Pengeluaran
+    Route::get('pengeluaran/data', [ExpenditureController::class, 'data'])->name('pengeluaran.data');
+    Route::resource('pengeluaran', ExpenditureController::class);
 });
